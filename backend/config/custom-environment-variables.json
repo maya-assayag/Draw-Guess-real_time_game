@@ -1,0 +1,4 @@
+{
+  "jwtPrivateKey": "ads_jwtPrivateKey",
+  "db": "ads_db"
+}
