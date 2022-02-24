@@ -1,5 +1,5 @@
 import { Route, Switch, Redirect } from "react-router-dom";
-import React, { Component, useState, useEffect } from "react";
+import React from "react";
 import { ToastContainer } from "react-toastify";
 import _ from "lodash";
 import io from "socket.io-client";
@@ -9,10 +9,10 @@ import Home from "./components/home";
 import WordChoosing from "./components/wordChoosing";
 import "./App.css";
 import "react-toastify/dist/ReactToastify.css";
-import Drawing from "./components/drawing";
 import WaitingPage from "./components/waitingPage";
-import ScoreTable from "./components/scoreTable";
-import Gussing from "./components/guessing";
+import SessionScoreTable from "./components/sessionScoreTable";
+
+import Playground from "./components/playground";
 
 const socket = io.connect("http://localhost:3900");
 
@@ -23,18 +23,14 @@ const App = () => {
       <Header />
       <Switch>
         <Route
-          path="/client-page/drawing"
-          render={props => <Drawing socket={socket} {...props} />}
-        />
-        <Route
-          path="/client-page/guessing"
-          render={props => <Gussing socket={socket} {...props} />}
+          path="/play-ground"
+          render={props => <Playground socket={socket} {...props} />}
         />
         <Route
           path="/waiting-page"
           render={props => <WaitingPage socket={socket} {...props} />}
         />
-        <Route path="/score-table" component={ScoreTable} />
+        <Route path="/score-table" component={SessionScoreTable} />
         <Route
           path="/word-choosing"
           render={props => <WordChoosing socket={socket} {...props} />}

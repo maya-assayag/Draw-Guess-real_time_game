@@ -20,14 +20,14 @@ const Home = ({ socket, history }) => {
     await socket.emit("player2_join_game");
     history.replace(`/waiting-page?role=${player}`);
   };
-  const handleScoreTableButton = () => {
+  const handleSessionScoreTableButton = () => {
     history.replace(`/score-table`);
   };
 
   return (
     <div>
       <h1>welcome</h1>
-      
+
       {player === "Player1" ? (
         <button
           type="submit"
@@ -49,7 +49,7 @@ const Home = ({ socket, history }) => {
       <button
         type="submit"
         className="btn btn-primary"
-        onClick={handleScoreTableButton}
+        onClick={handleSessionScoreTableButton}
       >
         Score Table
       </button>

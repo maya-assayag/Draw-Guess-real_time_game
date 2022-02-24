@@ -17,7 +17,7 @@ class WordChoosing extends Component {
   handleDraw = async word => {
     await this.props.socket.emit("player1_choosed_word", word);
 
-    this.props.history.replace(`/client-page/drawing?role=Player1`);
+    this.props.history.replace(`/play-ground/drawing?role=Player1`);
   };
 
   render() {

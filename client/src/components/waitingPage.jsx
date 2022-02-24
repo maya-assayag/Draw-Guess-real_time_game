@@ -13,7 +13,7 @@ const WaitingPage = ({ location, socket, history }) => {
     });
 
     socket.on("player1_choosed_word", () => {
-      history.replace(`/client-page/guessing?role=Player2`);
+      history.replace(`/play-ground/guessing?role=Player2`);
     });
   }, [location.search, socket]);
   return player === "Player1" ? (
