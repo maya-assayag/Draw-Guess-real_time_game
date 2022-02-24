@@ -8,6 +8,12 @@ function userUrl(id) {
   return `${apiEndpoint}/${id}`;
 }
 
+export async function saveUser(user) {
+  const { data } = await http.post(apiEndpoint, user);
+
+  return data;
+}
+
 export async function getUsers() {
   const { data: users } = await http.get(apiEndpoint, {
     headers: {

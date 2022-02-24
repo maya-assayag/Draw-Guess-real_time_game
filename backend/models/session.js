@@ -1,5 +1,6 @@
 const mongoose = require("mongoose");
 const Joi = require("joi");
+Joi.objectId = require("joi-objectid")(Joi);
 
 const sessionSchema = new mongoose.Schema({
   name: {
@@ -29,8 +30,9 @@ function validateSession(session) {
       .required()
       .min(0)
       .max(225),
-    participants: Joi.array().items({ _id: Joi.objectId() }),
-    winner: Joi.objectId()
+    //participants: Joi.array().items({ _id: Joi.objectId() }),
+    participants: Joi.array(),
+    winner: Joi.string()
   });
 
   return schema.validate(session);

@@ -9,6 +9,8 @@ const Playground = ({ socket, history }) => {
   const [guesser, setGuesser] = useState({ player: "Player2", score: 0 });
 
   useEffect(() => {
+
+
     socket.on("session_over", () => {
       history.replace(`/`);
     });

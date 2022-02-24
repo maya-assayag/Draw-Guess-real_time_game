@@ -31,7 +31,8 @@ io.on("connection", socket => {
   socket.join("session");
 
   socket.on("player1_start_game", session => {
-    socket.broadcast.emit("waiting_to_player2");
+    console.log(session);
+    socket.broadcast.emit("waiting_to_player2", session);
   });
 
   socket.on("player2_join_game", () => {

@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import queryString from "query-string";
+import {saveSession} from "../services/sessionService";
 
 const WaitingPage = ({ location, socket, history }) => {
   const [player, setPlayer] = useState("");
@@ -8,7 +9,13 @@ const WaitingPage = ({ location, socket, history }) => {
     const { role } = queryString.parse(location.search);
     setPlayer(role);
 
-    socket.on("player2_join_game", () => {
+    socket.on("player2_join_game", async () => {
+      const session = {
+        name: "",
+        roundes: 0,
+        participants: []
+      };
+      saveSession(session);
       history.replace(`/word-choosing`);
     });
 

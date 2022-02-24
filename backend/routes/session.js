@@ -1,6 +1,7 @@
 const asyncMiddleware = require("../middleware/async");
 const express = require("express");
 const { Session, validateSession } = require("../models/session");
+const mongoose = require("mongoose");
 
 const router = express.Router();
 router.use(express.json());
@@ -11,7 +12,7 @@ router.post(
     const { error } = validateSession(req.body);
     if (error) return res.status(400).send(error.details[0].message);
 
-    let session = new Advertisement(req.body);
+    let session = new Session(req.body);
 
     session = await session.save();
 
@@ -43,7 +44,7 @@ router.delete("/:id", async (req, res) => {
 });
 
 router.put("/:id", async (req, res) => {
-  const { error } = validateUser(req.body);
+  const { error } = validateSession(req.body);
   if (error) return res.status(400).send(error.details[0].message);
 
   const id = req.params.id;
