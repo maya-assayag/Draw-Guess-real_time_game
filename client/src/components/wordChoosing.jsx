@@ -14,7 +14,7 @@ class WordChoosing extends Component {
     this.setState({ words });
   }
 
-  handleDraw = async word => {
+  handleDrawButton = async word => {
     await this.props.socket.emit("player1_choosed_word", word);
 
     this.props.history.replace(`/play-ground/drawing?role=Player1`);
@@ -34,7 +34,7 @@ class WordChoosing extends Component {
                   <a
                     href="#"
                     className="btn btn-primary"
-                    onClick={() => this.handleDraw(word)}
+                    onClick={() => this.handleDrawButton(word)}
                   >
                     Draw
                   </a>

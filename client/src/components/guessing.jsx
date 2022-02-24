@@ -1,9 +1,8 @@
 import React, { useLayoutEffect, useState, useEffect } from "react";
 import rough from "roughjs/bundled/rough.esm";
 
-const Gussing = ({ socket, history }) => {
+const Gussing = ({ socket, history, onRightGuessing }) => {
   const [elements, setElements] = useState([]);
-  const [score, setScore] = useState(0);
   const [guess, setGuess] = useState("");
   const [word, setWord] = useState("");
 
@@ -13,7 +12,6 @@ const Gussing = ({ socket, history }) => {
     });
 
     socket.on("recive_canvas_elements", elements => {
-      console.log("RESIVE ELEMENT", elements);
       setElements(elements);
     });
   }, [socket]);
@@ -29,17 +27,9 @@ const Gussing = ({ socket, history }) => {
 
   const handleGuessButton = async () => {
     if (guess === word.value) {
-      let newScore;
-      word.level === 1
-        ? (newScore = 1)
-        : word.level === 2
-        ? (newScore = 3)
-        : (newScore = 5);
+      onRightGuessing(word);
 
-      const updateScore = score + newScore;
-      setScore(updateScore);
-
-      await socket.emit("session_over");
+      await socket.emit("round_over");
 
       history.replace(`/word-choosing`);
     }

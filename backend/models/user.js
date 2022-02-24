@@ -1,43 +1,27 @@
 const jwt = require("jsonwebtoken");
 const config = require("config");
 const mongoose = require("mongoose");
-const { advertisementSchema } = require("../models/advertisement");
 const Joi = require("joi");
 
 const userSchema = new mongoose.Schema({
   firstName: {
     type: String,
-    required: true,
-    minlength: 2,
-    maxlength: 50
+    minlength: 0,
+    maxlength: 25
   },
   lastName: {
     type: String,
-    required: true,
-    minlength: 2,
-    maxlength: 50
+    minlength: 0,
+    maxlength: 25
   },
-  email: {
+  username: {
     type: String,
-    unique: true,
+    lowercase: true,
     required: true,
-    minlength: 10,
-    maxlength: 255,
-    lowercase: true
+    minlength: 1,
+    maxlength: 25
   },
-  password: {
-    type: String,
-    required: true,
-    minlength: 8,
-    maxlength: 1024
-  },
-  role: {
-    type: String,
-    enum: ["Anonymous", "Client", "Admin"],
-    default: "Anonymous",
-    required: true
-  },
-  advertisements: { type: [advertisementSchema] }
+  sessions: [{ score: {}, type: mongoose.Types.ObjectId, ref: "Session" }]
 });
 
 userSchema.methods.generateAuthToken = function() {
@@ -54,28 +38,17 @@ function validateUser(user) {
   const schema = Joi.object({
     firstName: Joi.string()
       .required()
-      .min(2)
-      .max(50),
+      .min(0)
+      .max(25),
     lastName: Joi.string()
       .required()
-      .min(2)
-      .max(50),
-    email: Joi.string()
+      .min(0)
+      .max(25),
+    username: Joi.string()
       .required()
-      .min(10)
-      .max(255)
-      .lowercase()
-      .email(),
-    password: Joi.string()
-      .required()
-      .min(8)
-      .max(32)
-      .regex(
-        /^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[*.!@$%^&{}:;<>,.?~_+-]).{8,32}$/
-      ),
-    role: Joi.string()
-      .required()
-      .valid(...Object.values(["Anonymous", "Client", "Admin"]))
+      .min(1)
+      .max(25),
+    sessions: Joi.array().items({ _id: Joi.objectId() })
   });
 
   return schema.validate(user);

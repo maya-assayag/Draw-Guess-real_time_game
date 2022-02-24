@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
 
-const ScoreTable = () => {
+const ScoreTable = ({ drawer, guesser }) => {
   return (
-    <table class="table">
+    <table className="table">
       <thead>
         <tr>
           <th scope="col">Player 1</th>
@@ -11,8 +11,8 @@ const ScoreTable = () => {
       </thead>
       <tbody>
         <tr>
-          <td>Player 1 Score </td>
-          <td>Player 2 Score </td>
+          <td>{drawer.score} </td>
+          <td>{guesser.score} </td>
         </tr>
       </tbody>
     </table>

@@ -47,6 +47,10 @@ io.on("connection", socket => {
     socket.broadcast.emit("recive_canvas_elements", elements);
   });
 
+  socket.on("round_over", () => {
+    socket.broadcast.emit("round_over");
+  });
+
   socket.on("session_over", () => {
     socket.broadcast.emit("session_over");
   });

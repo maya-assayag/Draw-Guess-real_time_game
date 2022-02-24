@@ -1,4 +1,4 @@
 {
-  "jwtPrivateKey": "ads_jwtPrivateKey",
-  "db": "ads_db"
+  "jwtPrivateKey": "draw_and_guess_jwtPrivateKey",
+  "db": "draw_and_guess_db"
 }

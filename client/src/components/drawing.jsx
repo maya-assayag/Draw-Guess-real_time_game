@@ -27,7 +27,7 @@ const Drawing = ({ location, socket, history }) => {
     setPlayer(role);
     setWord(word);
 
-    socket.on("session_over", () => {
+    socket.on("round_over", () => {
       history.replace(`/waiting-page?role=${player}`);
     });
   }, []);
