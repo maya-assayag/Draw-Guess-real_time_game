@@ -5,13 +5,12 @@ import _ from "lodash";
 import io from "socket.io-client";
 import Header from "./components/header";
 import NotFound from "./components/notFound";
-import Home from "./components/home";
+import Home from "./components/home/home";
 import WordChoosing from "./components/wordChoosing";
 import "./App.css";
 import "react-toastify/dist/ReactToastify.css";
-import WaitingPage from "./components/waitingPage";
+import WaitingPage from "./components/waitingPage/waitingPage";
 import SessionScoreTable from "./components/sessionScoreTable";
-
 import Playground from "./components/playground";
 
 const socket = io.connect("http://localhost:3900");

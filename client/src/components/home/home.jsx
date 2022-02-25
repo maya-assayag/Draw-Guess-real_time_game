@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from "react";
-import { saveUser } from "../services/userService";
-import { saveSession } from "../services/sessionService";
-import { createUserObject, addSessionToUsers } from "../utilis/user";
+import { saveUser } from "../../services/userService";
+import { saveSession } from "../../services/sessionService";
+import { createUserObject, addSessionToUsers } from "../../utilis/user";
 import mongoose from "mongoose";
-import { createSessionObject } from "./../utilis/session";
+import { createSessionObject } from "../../utilis/session";
+import "./home.css";
 
 const Home = ({ socket, history }) => {
   const [player, setPlayer] = useState("Player1");
@@ -62,8 +63,8 @@ const Home = ({ socket, history }) => {
   };
 
   return (
-    <div>
-      <h1>welcome</h1>
+    <div className="text-center">
+      <h1 className="welcome-title">welcome</h1>
       <input
         type="text"
         placeholder="Username..."
@@ -72,29 +73,31 @@ const Home = ({ socket, history }) => {
           setUsername(event.target.value);
         }}
       ></input>
-      {player === "Player1" ? (
-        <button
-          type="submit"
-          className="btn btn-primary"
-          onClick={handleStartPlayButton}
-          disabled={!username}
-        >
-          Start Game
-        </button>
-      ) : (
-        <button
-          type="submit"
-          className="btn btn-primary"
-          onClick={handleJoinGame}
-          disabled={!username}
-        >
-          Join Game
-        </button>
-      )}
+      <div>
+        {player === "Player1" ? (
+          <button
+            type="submit"
+            className="btn btn-primary row"
+            onClick={handleStartPlayButton}
+            disabled={!username}
+          >
+            Start Game
+          </button>
+        ) : (
+          <button
+            type="submit"
+            className="btn btn-primary row"
+            onClick={handleJoinGame}
+            disabled={!username}
+          >
+            Join Game
+          </button>
+        )}
+      </div>
 
       <button
         type="submit"
-        className="btn btn-primary"
+        className="btn btn-primary row"
         onClick={handleSessionScoreTableButton}
       >
         Score Table

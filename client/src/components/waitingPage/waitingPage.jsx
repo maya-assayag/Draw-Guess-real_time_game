@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import queryString from "query-string";
-import {saveSession} from "../services/sessionService";
+import "./waitingPage.css";
 
 const WaitingPage = ({ location, socket, history }) => {
   const [player, setPlayer] = useState("");
@@ -17,10 +17,20 @@ const WaitingPage = ({ location, socket, history }) => {
       history.replace(`/play-ground/guessing?role=Player2`);
     });
   }, [location.search, socket]);
-  return player === "Player1" ? (
-    <div>Please wait player 2 enter to play...</div>
-  ) : (
-    <div>Please wait player 1 will choose word to draw...</div>
+
+  return (
+    <React.Fragment>
+      {player === "Player1" ? (
+        <div className="waiting-message">
+          Please wait, for player 2 to enter...
+        </div>
+      ) : (
+        <div className="waiting-message">
+          Please wait, player 1 will choose a word to draw...
+        </div>
+      )}
+      <div class="lds-hourglass"></div>
+    </React.Fragment>
   );
 };
 
