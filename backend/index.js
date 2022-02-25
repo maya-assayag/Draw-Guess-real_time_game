@@ -26,22 +26,30 @@ const io = new Server(server, {
   }
 });
 
+let saveSession = {};
+
 io.on("connection", socket => {
   //console.log(`User connected ${socket.id}`);
-  socket.join("session");
 
   socket.on("player1_start_game", session => {
-    console.log(session);
+    socket.join("session");
     socket.broadcast.emit("waiting_to_player2", session);
   });
 
-  socket.on("player2_join_game", () => {
+  socket.on("player2_join_game", session => {
+    socket.join("session");
+    saveSession._id = session._id;
+    saveSession.name = session.name;
+    saveSession.roundes = session.roundes;
+    saveSession.participants = session.participants;
+
     socket.broadcast.emit("player2_join_game");
   });
 
   socket.on("player1_choosed_word", word => {
     socket.broadcast.emit("player1_choosed_word");
     socket.broadcast.emit("send_word_to_gussing_view", word);
+    io.emit("send_session_to_playground_view", saveSession);
   });
 
   socket.on("send_canvas_elements", elements => {

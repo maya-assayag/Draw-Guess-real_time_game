@@ -32,8 +32,9 @@ const Gussing = ({ socket, history, onRightGuessing }) => {
       await socket.emit("round_over");
 
       history.replace(`/word-choosing`);
+    } else {
+      console.log("Try again");
     }
-    console.log("Try again");
   };
 
   return (

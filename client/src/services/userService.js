@@ -9,6 +9,13 @@ function userUrl(id) {
 }
 
 export async function saveUser(user) {
+  if (user._id) {
+    const body = { ...user };
+    delete body._id;
+    delete body.__v;
+    return http.put(userUrl(user._id), body);
+  }
+
   const { data } = await http.post(apiEndpoint, user);
 
   return data;

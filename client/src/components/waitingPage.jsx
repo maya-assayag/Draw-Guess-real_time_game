@@ -10,12 +10,6 @@ const WaitingPage = ({ location, socket, history }) => {
     setPlayer(role);
 
     socket.on("player2_join_game", async () => {
-      const session = {
-        name: "",
-        roundes: 0,
-        participants: []
-      };
-      saveSession(session);
       history.replace(`/word-choosing`);
     });
 

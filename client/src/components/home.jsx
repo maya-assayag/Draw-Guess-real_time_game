@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from "react";
 import { saveUser } from "../services/userService";
 import { saveSession } from "../services/sessionService";
+import { createUserObject, addSessionToUsers } from "../utilis/user";
 import mongoose from "mongoose";
+import { createSessionObject } from "./../utilis/session";
 
 const Home = ({ socket, history }) => {
   const [player, setPlayer] = useState("Player1");
@@ -10,7 +12,6 @@ const Home = ({ socket, history }) => {
 
   useEffect(() => {
     socket.on("waiting_to_player2", sessionData => {
-      console.log("DATA", sessionData);
       setSession(sessionData);
       setPlayer("Player2");
     });
@@ -19,53 +20,40 @@ const Home = ({ socket, history }) => {
   const handleStartPlayButton = async () => {
     setPlayer("Player1");
 
-    let user = {
-      firstName: "",
-      lastName: "",
-      username,
-      sessions: []
-    };
+    let user = createUserObject(username);
 
     user = await saveUser(user);
 
-    let tempSession = {
-      name: "",
-      roundes: 0,
-      participants: [mongoose.Types.ObjectId(user._id)]
-    };
+    let tempSession = createSessionObject(user._id);
 
     tempSession = await saveSession(tempSession);
-    console.log(1, tempSession);
 
     setSession(tempSession);
-    console.log(2, session);
 
     await socket.emit("player1_start_game", tempSession);
     history.replace(`/waiting-page?role=${player}`);
   };
 
   const handleJoinGame = async () => {
-    let user = {
-      firstName: "",
-      lastName: "",
-      username,
-      sessions: []
-    };
+    let user = createUserObject(username);
 
     user = await saveUser(user);
 
     let tempSession = { ...session };
-    console.log(session, tempSession);
+
     tempSession.participants = [
-      mongoose.Types.ObjectId(user._id),
-      ...session.participants
+      ...session.participants,
+      mongoose.Types.ObjectId(user._id)
     ];
 
-    tempSession = saveSession(tempSession);
+    tempSession = await saveSession(tempSession);
+    tempSession = tempSession.data;
 
     setSession(tempSession);
 
-    await socket.emit("player2_join_game");
+    await addSessionToUsers(0, tempSession);
+
+    await socket.emit("player2_join_game", tempSession);
     history.replace(`/waiting-page?role=${player}`);
   };
 

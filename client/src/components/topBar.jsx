@@ -1,10 +1,11 @@
 import React, { Component } from "react";
 import ScoreTable from "./scoreTable";
 
-const TopBar = ({ socket, onClickExit, drawer, guesser }) => {
+const TopBar = ({ onClickExit, drawer, guesser }) => {
   return (
     <React.Fragment>
       <ScoreTable drawer={drawer} guesser={guesser} />
+      
       <button type="button" className="btn btn-danger" onClick={onClickExit}>
         Exit
       </button>
