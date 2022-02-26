@@ -1,7 +1,34 @@
 import React, { useLayoutEffect, useState, useEffect } from "react";
 import rough from "roughjs/bundled/rough.esm";
+import getStroke from "perfect-freehand";
 import "./canvas.css";
 
+const drawElement = (roughCanvas, context, element) => {
+  if (element.hasOwnProperty("points")) {
+    const myStroke = getStroke(element.points, { size: 7 });
+    const pathData = getSvgPathFromStroke(myStroke);
+    const myPath = new Path2D(pathData);
+    context.fill(myPath);
+  } else {
+    roughCanvas.draw(element.roughElement);
+  }
+};
+
+function getSvgPathFromStroke(stroke) {
+  if (!stroke.length) return "";
+
+  const d = stroke.reduce(
+    (acc, [x0, y0], i, arr) => {
+      const [x1, y1] = arr[(i + 1) % arr.length];
+      acc.push(x0, y0, (x0 + x1) / 2, (y0 + y1) / 2);
+      return acc;
+    },
+    ["M", ...stroke[0], "Q"]
+  );
+
+  d.push("Z");
+  return d.join(" ");
+}
 const Gussing = ({ socket, history, onRightGuessing }) => {
   const [elements, setElements] = useState([]);
   const [guess, setGuess] = useState("");
@@ -24,7 +51,7 @@ const Gussing = ({ socket, history, onRightGuessing }) => {
     context.clearRect(0, 0, canvas.width, canvas.height);
 
     const roughCanvas = rough.canvas(canvas);
-    elements.forEach(({ roughElement }) => roughCanvas.draw(roughElement));
+    elements.forEach(element => drawElement(roughCanvas, context, element));
   }, [elements]);
 
   const handleGuessButton = async () => {
