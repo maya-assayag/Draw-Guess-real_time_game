@@ -29,7 +29,7 @@ const WaitingPage = ({ location, socket, history }) => {
           Please wait, player 1 will choose a word to draw...
         </div>
       )}
-      <div class="lds-hourglass"></div>
+      <div className="lds-hourglass"></div>
     </React.Fragment>
   );
 };

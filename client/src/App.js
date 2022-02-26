@@ -6,7 +6,7 @@ import io from "socket.io-client";
 import Header from "./components/header";
 import NotFound from "./components/notFound";
 import Home from "./components/home/home";
-import WordChoosing from "./components/wordChoosing";
+import WordChoosing from "./components/wordChoosing/wordChoosing";
 import "./App.css";
 import "react-toastify/dist/ReactToastify.css";
 import WaitingPage from "./components/waitingPage/waitingPage";

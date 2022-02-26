@@ -1,0 +1,19 @@
+.container {
+  position: relative;
+}
+.toolbar {
+  position: fixed;
+}
+#canvas {
+  border: solid 3px black;
+  border-radius: 70px;
+  padding-left: 0;
+  padding-right: 0;
+  margin-left: auto;
+  margin-right: auto;
+  margin-bottom: 10px;
+  display: block;
+  width: 90%;
+  height: 10%;
+  background-color: #a3e8ff;
+}

@@ -1,6 +1,7 @@
 import React, { useLayoutEffect, useState, useEffect } from "react";
 import rough from "roughjs/bundled/rough.esm";
 import queryString from "query-string";
+import "./canvas.css";
 
 const generator = rough.generator();
 
@@ -83,60 +84,63 @@ const Drawing = ({ location, socket, history }) => {
   };
 
   return (
-    <div>
-      <div style={{ position: "fixed" }}>
+    <div className="container">
+      <div className="row toolbar" style={{ position: "fixed" }}>
         <input
-          type="redio"
+          type="radio"
           id="line"
           checked={elementType === "line"}
           onChange={() => setElementType("line")}
         />
         <label htmlFor="line">Line</label>
         <input
-          type="redio"
+          type="radio"
           id="rectangle"
           checked={elementType === "rectangle"}
           onChange={() => setElementType("rectangle")}
         />
         <label htmlFor="rectangle">Rectangle</label>
       </div>
-      <canvas
-        id="canvas"
-        style={{ backgroundColor: "blue" }}
-        width={window.innerWidth}
-        height={window.innerHeight}
-        onMouseDown={handlestartDrawing}
-        onMouseUp={handlefinishDrawing}
-        onMouseMove={handleDrawing}
-      ></canvas>
-      {player === "Player1" ? (
-        <button
-          type="submit"
-          className="btn btn-primary"
-          onClick={handleSendButton}
-        >
-          Send
-        </button>
-      ) : (
-        <div>
-          <input
-            type="text"
-            placeholder="Guess..."
-            className="guess"
-            onChange={event => {
-              setGuess(event.target.value);
-            }}
-          ></input>
+      <div className="row">
+        <canvas
+          id="canvas"
+          width={window.innerWidth}
+          height={window.innerHeight}
+          onMouseDown={handlestartDrawing}
+          onMouseUp={handlefinishDrawing}
+          onMouseMove={handleDrawing}
+        ></canvas>
+      </div>
+      <div className="row">
+        {player === "Player1" ? (
           <button
             type="submit"
             className="btn btn-primary"
-            disabled={!guess}
-            onClick={handleGuessButton}
+            onClick={handleSendButton}
           >
-            Guess
+            Send
           </button>
-        </div>
-      )}
+        ) : (
+          <div>
+            <input
+              type="text"
+              placeholder="Guess..."
+              className="guess"
+              onChange={event => {
+                setGuess(event.target.value);
+              }}
+            ></input>
+            <button
+              type="submit"
+              className="btn btn-primary"
+              disabled={!guess}
+              onClick={handleGuessButton}
+            >
+              Guess
+            </button>
+          </div>
+        )}
+      </div>
     </div>
   );
 };

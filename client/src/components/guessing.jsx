@@ -1,5 +1,6 @@
 import React, { useLayoutEffect, useState, useEffect } from "react";
 import rough from "roughjs/bundled/rough.esm";
+import "./canvas.css";
 
 const Gussing = ({ socket, history, onRightGuessing }) => {
   const [elements, setElements] = useState([]);
@@ -41,9 +42,8 @@ const Gussing = ({ socket, history, onRightGuessing }) => {
     <div>
       <canvas
         id="canvas"
-        style={{ backgroundColor: "blue" }}
-        width={window.innerWidth}
-        height={window.innerHeight}
+        min-width={window.innerWidth}
+        min-height={window.innerHeight}
       ></canvas>
 
       <div>
