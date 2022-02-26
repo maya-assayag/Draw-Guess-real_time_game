@@ -23,7 +23,8 @@ router.post(
 router.get(
   "/:sessionId",
   asyncMiddleware(async (req, res) => {
-    const session = await Session.findById({ _id: req.params.id });
+    // console.log(req.params.id);
+    const session = await Session.findById({ _id: req.params.sessionId });
     if (session) return res.send(session);
     return res.status(404).send("The session with the given ID was not found");
   })
@@ -49,14 +50,16 @@ router.put("/:id", async (req, res) => {
 
   const id = req.params.id;
 
+  console.log("SCORE", req.body.score);
+
   const session = await Session.findByIdAndUpdate(
     id,
     {
       $set: {
         name: req.body.name,
         roundes: req.body.roundes,
-        participants: req.body.participants,
-        winner: req.body.winner
+        score: req.body.score,
+        participants: req.body.participants
       }
     },
     { new: true }
@@ -64,7 +67,7 @@ router.put("/:id", async (req, res) => {
 
   if (!session)
     return res.status(404).send("The session with the given ID was not found");
-
+  console.log("SESSION AFTER UPDATE", session);
   res.send(session);
 });
 

@@ -41,6 +41,7 @@ io.on("connection", socket => {
     saveSession._id = session._id;
     saveSession.name = session.name;
     saveSession.roundes = session.roundes;
+    saveSession.score = session.score;
     saveSession.participants = session.participants;
 
     socket.broadcast.emit("player2_join_game");

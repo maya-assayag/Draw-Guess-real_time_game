@@ -73,11 +73,11 @@ const Drawing = ({ location, socket, history }) => {
     setElements(elementsCopy);
   };
 
-  const handleSendButton = () => {
-    // const canvas = document.getElementById("canvas");
-    // const dataURI = canvas.toDataURL();
-    // console.log(dataURI);
-  };
+  // const handleSendButton = () => {
+  //   // const canvas = document.getElementById("canvas");
+  //   // const dataURI = canvas.toDataURL();
+  //   // console.log(dataURI);
+  // };
 
   const handleGuessButton = () => {
     guess === word ? console.log("score!") : console.log("Try again");
@@ -112,15 +112,7 @@ const Drawing = ({ location, socket, history }) => {
         ></canvas>
       </div>
       <div className="row">
-        {player === "Player1" ? (
-          <button
-            type="submit"
-            className="btn btn-primary"
-            onClick={handleSendButton}
-          >
-            Send
-          </button>
-        ) : (
+        {player === "Player1" ? null : (
           <div>
             <input
               type="text"

@@ -22,21 +22,12 @@ export async function saveUser(user) {
 }
 
 export async function getUsers() {
-  const { data: users } = await http.get(apiEndpoint, {
-    headers: {
-      "x-auth-token": getJwt()
-    }
-  });
+  const { data: users } = await http.get(apiEndpoint);
   return users;
 }
 
 export async function getUser(id) {
-  const { data: user } = await http.get(userUrl(id), {
-    headers: {
-      "x-auth-token":
-        "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MjBkMzk3ZmE5YTU0ZDc4OGFmOWQ3YTgiLCJyb2xlIjoiQWRtaW4iLCJpYXQiOjE2NDUwMzM4NTh9.IRvxUVgq_3UCakA_t-_hrivsoCmj38_9AsAzbnwsP_8"
-    }
-  });
+  const { data: user } = await http.get(userUrl(id));
   return user;
 }
 
@@ -45,11 +36,7 @@ export async function register(user) {
 }
 
 export async function deleteUser(id) {
-  const { data: user } = await http.delete(userUrl(id), {
-    headers: {
-      "x-auth-token": getJwt()
-    }
-  });
+  const { data: user } = await http.delete(userUrl(id));
 
   return user;
 }

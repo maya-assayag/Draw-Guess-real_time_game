@@ -1,6 +1,6 @@
 import React, { Component, useEffect, useState } from "react";
 import { Route } from "react-router-dom";
-import { getUser, saveUser } from "../services/userService";
+import { getSession, saveSession } from "../services/sessionService";
 import Gussing from "./guessing";
 import Drawing from "./drawing";
 import TopBar from "./topBar";
@@ -9,45 +9,21 @@ const Playground = ({ socket, history }) => {
   const [drawer, setDrawer] = useState({
     id: "",
     username: "",
-    player: "Player1",
-    score: 0
+    player: "Player1"
   });
   const [guesser, setGuesser] = useState({
     id: "",
     username: "",
-    player: "Player2",
-    score: 0
+    player: "Player2"
   });
   const [session, setSession] = useState({});
 
-  const buildPlayers = async session => {
-    const tempDrawer = { ...drawer };
-    const tempGuesser = { ...guesser };
-
-    tempDrawer.id = session.participants[0];
-    tempGuesser.id = session.participants[1];
-
-    const drawerUser = await getUser(tempDrawer.id);
-    const guesserUser = await getUser(tempGuesser.id);
-
-    tempDrawer.score = drawerUser.sessions.find(
-      s => s.session === session._id
-    ).score;
-    tempGuesser.score = guesserUser.sessions.find(
-      s => s.session === session._id
-    ).score;
-
-    setDrawer(tempDrawer);
-    setGuesser(tempGuesser);
-    console.log("UPDATE SCORE STATES WITH DATA FROM DB");
-  };
-
   useEffect(() => {
-    console.log("PG Acure!");
-    socket.on("send_session_to_playground_view", session => {
-      console.log("PG Acure!", session);
-      setSession(session);
-      buildPlayers(session);
+    socket.on("send_session_to_playground_view", async session => {
+      const s = await getSession(session._id);
+      if (s) {
+        setSession(s);
+      }
     });
 
     socket.on("session_over", () => {
@@ -69,35 +45,24 @@ const Playground = ({ socket, history }) => {
       ? (newScore = 3)
       : (newScore = 5);
 
-    const updateGuesserScore = { ...guesser };
-    updateGuesserScore.score += newScore;
+    const updateScore = { ...session };
+    updateScore.score += newScore;
+    setSession(updateScore);
 
-    const updateUser = await getUser(guesser.id);
-
-    updateUser.sessions = updateUser.sessions.filter(
-      session => session.session === session._id
-    );
-
-    updateUser.sessions = [
-      { score: updateGuesserScore.score, session: session._id },
-      ...updateUser.sessions
-    ];
-
-    await saveUser(updateUser);
-    console.log("UPDATE SCORE USER ON DB");
+    let sessionFromDB = await getSession(session._id);
+    sessionFromDB.score = updateScore.score;
+    await saveSession(sessionFromDB);
   };
 
   return (
     <React.Fragment>
-      {console.log(drawer, guesser)}
       <Route
         path="/play-ground"
         render={props => (
           <TopBar
             socket={socket}
             onClickExit={hadeleExitButton}
-            drawer={drawer}
-            guesser={guesser}
+            session={session}
             {...props}
           />
         )}

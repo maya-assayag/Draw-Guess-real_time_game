@@ -14,8 +14,8 @@ const sessionSchema = new mongoose.Schema({
     maxlength: 255,
     required: true
   },
-  participants: [{ type: mongoose.Types.ObjectId, ref: "User" }],
-  winner: { type: mongoose.Types.ObjectId, ref: "User" }
+  score: { type: Number, minlength: 0, required: true },
+  participants: [{ type: mongoose.Types.ObjectId, ref: "User" }]
 });
 
 const Session = mongoose.model("Session", sessionSchema);
@@ -30,9 +30,11 @@ function validateSession(session) {
       .required()
       .min(0)
       .max(225),
+    score: Joi.number()
+      .required()
+      .min(0),
     //participants: Joi.array().items({ _id: Joi.objectId() }),
-    participants: Joi.array(),
-    winner: Joi.string()
+    participants: Joi.array()
   });
 
   return schema.validate(session);

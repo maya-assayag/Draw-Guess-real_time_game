@@ -18,7 +18,8 @@ export async function getSessionsByUserId(userId) {
 }
 
 export async function getSession(id) {
-  return await http.get(sessionUrl(id)).find(session => session._id === id);
+  const { data } = await http.get(sessionUrl(id));
+  return data;
 }
 
 export async function saveSession(session) {

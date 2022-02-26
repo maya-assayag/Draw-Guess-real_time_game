@@ -3,6 +3,7 @@ export function createSessionObject(userId) {
   return {
     name: "",
     roundes: 0,
-    participants: [mongoose.Types.ObjectId(userId)]
+    participants: [mongoose.Types.ObjectId(userId)],
+    score: 0
   };
 }

@@ -1,4 +1,4 @@
-import { getUser, saveUser } from "../services/userService";
+import { getUser, saveUser, getUsers } from "../services/userService";
 export function createUserObject(username) {
   return {
     firstName: "",
@@ -8,18 +8,17 @@ export function createUserObject(username) {
   };
 }
 
-export async function addSessionToUsers(score, session) {
-  console.log("SESSION:", session);
+export async function getUserByUsername(username) {
+  const users = await getUsers();
+  return users.find(user => user.username === username);
+}
+
+export async function addSessionToUsers(session) {
   let user;
   for (let userId of session.participants) {
     user = await getUser(userId.toString());
     if (user) {
-      console.log("USER JUST MOMENT BEFORE", user);
-      user.sessions = [
-        { score, session: session._id.toString() },
-        ...user.sessions
-      ];
-      console.log("USER JUST MOMENT AFTER", user);
+      user.sessions = [session._id.toString(), ...user.sessions];
       await saveUser(user);
     }
   }

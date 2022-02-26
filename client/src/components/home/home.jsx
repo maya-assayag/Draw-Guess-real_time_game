@@ -1,7 +1,11 @@
 import React, { useState, useEffect } from "react";
 import { saveUser } from "../../services/userService";
 import { saveSession } from "../../services/sessionService";
-import { createUserObject, addSessionToUsers } from "../../utilis/user";
+import {
+  createUserObject,
+  addSessionToUsers,
+  getUserByUsername
+} from "../../utilis/user";
 import mongoose from "mongoose";
 import { createSessionObject } from "../../utilis/session";
 import "./home.css";
@@ -21,9 +25,12 @@ const Home = ({ socket, history }) => {
   const handleStartPlayButton = async () => {
     setPlayer("Player1");
 
-    let user = createUserObject(username);
+    let user = await getUserByUsername(username);
 
-    user = await saveUser(user);
+    if (!user) {
+      user = createUserObject(username);
+      user = await saveUser(user);
+    }
 
     let tempSession = createSessionObject(user._id);
 
@@ -36,9 +43,12 @@ const Home = ({ socket, history }) => {
   };
 
   const handleJoinGame = async () => {
-    let user = createUserObject(username);
+    let user = await getUserByUsername(username);
 
-    user = await saveUser(user);
+    if (!user) {
+      user = createUserObject(username);
+      user = await saveUser(user);
+    }
 
     let tempSession = { ...session };
 
@@ -52,7 +62,7 @@ const Home = ({ socket, history }) => {
 
     setSession(tempSession);
 
-    await addSessionToUsers(0, tempSession);
+    await addSessionToUsers(tempSession);
 
     await socket.emit("player2_join_game", tempSession);
     history.replace(`/waiting-page?role=${player}`);

@@ -10,7 +10,7 @@ import WordChoosing from "./components/wordChoosing/wordChoosing";
 import "./App.css";
 import "react-toastify/dist/ReactToastify.css";
 import WaitingPage from "./components/waitingPage/waitingPage";
-import SessionScoreTable from "./components/sessionScoreTable";
+import SessionsScoreTable from "./components/sessionsScoreTable";
 import Playground from "./components/playground";
 
 const socket = io.connect("http://localhost:3900");
@@ -29,7 +29,7 @@ const App = () => {
           path="/waiting-page"
           render={props => <WaitingPage socket={socket} {...props} />}
         />
-        <Route path="/score-table" component={SessionScoreTable} />
+        <Route path="/score-table" component={SessionsScoreTable} />
         <Route
           path="/word-choosing"
           render={props => <WordChoosing socket={socket} {...props} />}

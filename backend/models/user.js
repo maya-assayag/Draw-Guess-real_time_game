@@ -22,12 +22,7 @@ const userSchema = new mongoose.Schema({
     minlength: 1,
     maxlength: 25
   },
-  sessions: [
-    {
-      score: { type: Number },
-      session: { type: mongoose.Types.ObjectId, ref: "Session" }
-    }
-  ]
+  sessions: [{ type: mongoose.Types.ObjectId, ref: "Session" }]
 });
 
 userSchema.methods.generateAuthToken = function() {
@@ -54,10 +49,7 @@ function validateUser(user) {
       .required()
       .min(1)
       .max(25),
-    sessions: Joi.array().items({
-      score: Joi.number(),
-      session: Joi.objectId()
-    })
+    sessions: Joi.array()
   });
 
   return schema.validate(user);
