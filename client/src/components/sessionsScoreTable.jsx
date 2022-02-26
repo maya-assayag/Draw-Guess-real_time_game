@@ -42,11 +42,10 @@ class SessionsScoreTable extends Component {
     return (
       <React.Fragment>
         <div className="container px-4 py-5" id="custom-cards">
-          <h2 className="pb-2 border-bottom">Score Table</h2>
+          <h2 className="pb-2 border-bottom">Sessions Score Table</h2>
           <table className="table">
             <thead>
               <tr>
-                <th scope="col">Session Id</th>
                 <th scope="col">Player 1</th>
                 <th scope="col">Player 2</th>
                 <th scope="col">Score</th>
@@ -55,7 +54,6 @@ class SessionsScoreTable extends Component {
             <tbody>
               {sessions.map(session => (
                 <tr key={session._id}>
-                  <th scope="row">{session._id}</th>
                   <td>{session.participants[0]}</td>
                   <td>{session.participants[1]}</td>
                   <td>{session.score}</td>

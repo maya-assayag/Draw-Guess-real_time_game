@@ -54,6 +54,7 @@ io.on("connection", socket => {
   });
 
   socket.on("send_canvas_elements", elements => {
+    console.log(elements);
     socket.broadcast.emit("recive_canvas_elements", elements);
   });
 

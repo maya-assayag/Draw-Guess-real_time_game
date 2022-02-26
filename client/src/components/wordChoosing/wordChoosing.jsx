@@ -28,24 +28,21 @@ class WordChoosing extends Component {
     const { words } = this.state;
     return (
       <React.Fragment>
-        <div className="container">
+        <section className="container">
           {words.map(word => (
-            <div key={word.level} className="col-3 ">
-              <div className={this.renderLevelClassName(word.level)}>
-                <div className="card-body">
-                  <h5 className="card-title">{word.value}</h5>
-                  <a
-                    href="#"
-                    className="btn btn-primary"
-                    onClick={() => this.handleDrawButton(word)}
-                  >
-                    Draw
-                  </a>
-                </div>
-              </div>
+            <div key={word.level} className="card">
+              <h2 className="card-title">{word.value}</h2>
+              <h6>Level: {word.level}</h6>
+              <a
+                href="#"
+                className="btn btn-primary"
+                onClick={() => this.handleDrawButton(word)}
+              >
+                Draw
+              </a>
             </div>
           ))}
-        </div>
+        </section>
       </React.Fragment>
     );
   }

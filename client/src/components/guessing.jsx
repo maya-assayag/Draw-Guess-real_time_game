@@ -6,6 +6,7 @@ const Gussing = ({ socket, history, onRightGuessing }) => {
   const [elements, setElements] = useState([]);
   const [guess, setGuess] = useState("");
   const [word, setWord] = useState("");
+  const [IsCorrectGuess, setIsCorrectGuess] = useState("");
 
   useEffect(() => {
     socket.on("send_word_to_gussing_view", word => {
@@ -34,7 +35,7 @@ const Gussing = ({ socket, history, onRightGuessing }) => {
 
       history.replace(`/word-choosing`);
     } else {
-      console.log("Try again");
+      setIsCorrectGuess("Try Again!");
     }
   };
 
@@ -42,8 +43,8 @@ const Gussing = ({ socket, history, onRightGuessing }) => {
     <div>
       <canvas
         id="canvas"
-        min-width={window.innerWidth}
-        min-height={window.innerHeight}
+        width={window.innerWidth}
+        height={window.innerHeight}
       ></canvas>
 
       <div>
@@ -53,6 +54,7 @@ const Gussing = ({ socket, history, onRightGuessing }) => {
           className="guess"
           onChange={event => {
             setGuess(event.target.value);
+            setIsCorrectGuess("");
           }}
         ></input>
         <button
@@ -63,6 +65,7 @@ const Gussing = ({ socket, history, onRightGuessing }) => {
         >
           Guess
         </button>
+        <p className="text-danger">{IsCorrectGuess}</p>
       </div>
     </div>
   );

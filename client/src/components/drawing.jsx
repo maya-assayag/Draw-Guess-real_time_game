@@ -79,27 +79,38 @@ const Drawing = ({ location, socket, history }) => {
   //   // console.log(dataURI);
   // };
 
-  const handleGuessButton = () => {
-    guess === word ? console.log("score!") : console.log("Try again");
-  };
+  // const handleGuessButton = () => {
+  //   guess === word ? console.log("score!") : console.log("Try again");
+  // };
 
   return (
     <div className="container">
-      <div className="row toolbar" style={{ position: "fixed" }}>
+      <div id="tool_bar" className="radio">
         <input
           type="radio"
+          name="myRadio"
           id="line"
+          value="line"
+          className="radio__input"
           checked={elementType === "line"}
           onChange={() => setElementType("line")}
         />
-        <label htmlFor="line">Line</label>
+        <label className="radio__input" htmlFor="line">
+          Line
+        </label>
+
         <input
           type="radio"
+          name="myRadio"
           id="rectangle"
+          value="rectangle"
+          className="radio__input"
           checked={elementType === "rectangle"}
           onChange={() => setElementType("rectangle")}
         />
-        <label htmlFor="rectangle">Rectangle</label>
+        <label className="radio__input" htmlFor="rectangle">
+          Rectangle
+        </label>
       </div>
       <div className="row">
         <canvas
@@ -111,7 +122,7 @@ const Drawing = ({ location, socket, history }) => {
           onMouseMove={handleDrawing}
         ></canvas>
       </div>
-      <div className="row">
+      {/* <div className="row">
         {player === "Player1" ? null : (
           <div>
             <input
@@ -132,7 +143,7 @@ const Drawing = ({ location, socket, history }) => {
             </button>
           </div>
         )}
-      </div>
+      </div> */}
     </div>
   );
 };

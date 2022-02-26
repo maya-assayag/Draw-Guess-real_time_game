@@ -3,29 +3,12 @@
   font-size: 40px;
   text-align: center;
 }
+
 .conteiner {
-  /* place-items: center; */
-  margin: 0 auto;
+  display: flex;
+  justify-content: center;
 }
 
 .card {
-  /* align-items: center;
-  justify-content: center; */
-
-  margin-bottom: 20px;
-  margin-top: 20px;
+  margin: 10px;
 }
-
-.level-0 {
-  background-color: #7dc57d;
-}
-.level-1 {
-  background-color: #fbfa8e;
-}
-.level-2 {
-  background-color: #e6582e;
-}
-
-/* .btn {
-  align: center;
-} */

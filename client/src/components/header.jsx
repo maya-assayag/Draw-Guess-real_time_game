@@ -14,9 +14,6 @@ class Header extends Component {
               <NavLink className="nav-link" to="/">
                 Home
               </NavLink>
-              <NavLink className="nav-link" to="waiting-page">
-                Client
-              </NavLink>
             </div>
           </div>
         </div>
