@@ -13,6 +13,10 @@ import SessionsScoreTable from "./components/sessionsScoreTable";
 import Playground from "./components/playground";
 
 const socket = io.connect(process.env.REACT_APP_API_URL);
+// const socket = io(process.env.REACT_APP_API_URL, {
+//   transports: ["websocket", "polling", "flashsocket"]
+// });
+console.log("SERVER IS:", process.env.REACT_APP_API_URL);
 
 const App = () => {
   return (

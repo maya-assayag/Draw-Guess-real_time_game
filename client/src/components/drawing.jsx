@@ -73,7 +73,22 @@ const Drawing = ({ location, socket, history }) => {
     elements.forEach(element => drawElement(roughCanvas, context, element));
   }, [elements]);
 
-  const handlestartDrawing = async ({ clientX, clientY }) => {
+  const handlestartDrawingMouse = async ({ clientX, clientY }) => {
+    setDrawing(true);
+
+    const element = createElement(
+      clientX,
+      clientY,
+      clientX,
+      clientY,
+      elementType
+    );
+    setElements(prevState => [...prevState, element]);
+    await socket.emit("send_canvas_elements", elements);
+  };
+
+  const handlestartDrawingTouch = async ({ touches }) => {
+    const { clientX, clientY } = touches[0];
     setDrawing(true);
 
     const element = createElement(
@@ -91,7 +106,7 @@ const Drawing = ({ location, socket, history }) => {
     setDrawing(false);
   };
 
-  const handleDrawing = ({ clientX, clientY }) => {
+  const handleDrawingMouse = ({ clientX, clientY }) => {
     if (!isDrawing) return;
 
     const index = elements.length - 1;
@@ -118,6 +133,33 @@ const Drawing = ({ location, socket, history }) => {
     setElements(elementsCopy);
   };
 
+  const handleDrawingTouch = ({ touches }) => {
+    const { clientX, clientY } = touches[0];
+    if (!isDrawing) return;
+
+    const index = elements.length - 1;
+    const elementsCopy = [...elements];
+
+    if (elements[index].hasOwnProperty("points")) {
+      elementsCopy[index].points = [
+        ...elementsCopy[index].points,
+        { x: clientX, y: clientY }
+      ];
+    } else {
+      const { x1, y1 } = elements[index];
+
+      const updateElement = createElement(
+        x1,
+        y1,
+        clientX,
+        clientY,
+        elementType
+      );
+
+      elementsCopy[index] = updateElement;
+    }
+    setElements(elementsCopy);
+  };
   return (
     <div className="container">
       <p>Drawing the word:{word.value}</p>
@@ -167,9 +209,12 @@ const Drawing = ({ location, socket, history }) => {
           id="canvas"
           width={window.innerWidth}
           height={window.innerHeight}
-          onMouseDown={handlestartDrawing}
+          onMouseDown={handlestartDrawingMouse}
           onMouseUp={handlefinishDrawing}
-          onMouseMove={handleDrawing}
+          onMouseMove={handleDrawingMouse}
+          onTouchStart={handlestartDrawingTouch}
+          onTouchEnd={handlefinishDrawing}
+          onTouchMove={handleDrawingTouch}
         ></canvas>
       </div>
     </div>

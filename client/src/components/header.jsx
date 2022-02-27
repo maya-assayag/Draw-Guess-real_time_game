@@ -7,7 +7,7 @@ class Header extends Component {
       <nav className="navbar navbar-expand-lg navbar-light bg-light">
         <div className="container-fluid">
           <NavLink className="navbar-brand" to="/">
-            MyAD
+            Draw & Guess
           </NavLink>
           <div className="collapse navbar-collapse" id="navbarNavAltMarkup">
             <div className="navbar-nav">

@@ -15,13 +15,15 @@ require("./startup/config")();
 require("./startup/prod")(app);
 
 const port = process.env.PORT || 3900;
+const INDEX = "/index.html";
+
 const server = app.listen(port, () =>
   winston.info(`Listening on port ${port}...`)
 );
 
 const io = new Server(server, {
   cors: {
-    origin: "http://localhost:3000",
+    origin: "*",
     methods: ["GET", "POST"]
   }
 });
@@ -32,11 +34,13 @@ io.on("connection", socket => {
   //console.log(`User connected ${socket.id}`);
 
   socket.on("player1_start_game", session => {
+    console.log("***********BACKEND: PLAYER 1 ENTRE GAME************** ");
     socket.join("session");
     socket.broadcast.emit("waiting_to_player2", session);
   });
 
   socket.on("player2_join_game", session => {
+    console.log("***********BACKEND: PLAYER 2 JOIN GAME************** ");
     socket.join("session");
     saveSession._id = session._id;
     saveSession.name = session.name;
@@ -48,6 +52,7 @@ io.on("connection", socket => {
   });
 
   socket.on("player1_choosed_word", word => {
+    console.log("***********BACKEND: PLAYER 1 CHOOSE A WORD************** ");
     socket.broadcast.emit("player1_choosed_word");
     socket.broadcast.emit("send_word_to_gussing_view", word);
     socket.emit("send_word_to_drawing_view", word);
