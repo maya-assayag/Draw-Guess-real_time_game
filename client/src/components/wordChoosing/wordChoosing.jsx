@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import { generateWords } from "../../services/generateWords";
 import "./wordChoosing.css";
-import _ from "lodash";
 
 class WordChoosing extends Component {
   state = {

@@ -50,11 +50,11 @@ io.on("connection", socket => {
   socket.on("player1_choosed_word", word => {
     socket.broadcast.emit("player1_choosed_word");
     socket.broadcast.emit("send_word_to_gussing_view", word);
+    socket.emit("send_word_to_drawing_view", word);
     io.emit("send_session_to_playground_view", saveSession);
   });
 
   socket.on("send_canvas_elements", elements => {
-    console.log(elements);
     socket.broadcast.emit("recive_canvas_elements", elements);
   });
 

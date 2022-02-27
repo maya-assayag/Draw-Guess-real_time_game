@@ -1,8 +1,7 @@
 import http from "./httpService";
 import config from "../config.json";
-import { getJwt } from "./authService";
 
-const apiEndpoint = `${config.apiUrl}/user`;
+const apiEndpoint = `${config.apiUrl}/api/user`;
 
 function userUrl(id) {
   return `${apiEndpoint}/${id}`;

@@ -1,7 +1,6 @@
 import { Route, Switch, Redirect } from "react-router-dom";
 import React from "react";
 import { ToastContainer } from "react-toastify";
-import _ from "lodash";
 import io from "socket.io-client";
 import Header from "./components/header";
 import NotFound from "./components/notFound";
@@ -12,8 +11,9 @@ import "react-toastify/dist/ReactToastify.css";
 import WaitingPage from "./components/waitingPage/waitingPage";
 import SessionsScoreTable from "./components/sessionsScoreTable";
 import Playground from "./components/playground";
+import config from "./config.json";
 
-const socket = io.connect("http://localhost:3900");
+const socket = io.connect(config.apiUrl);
 
 const App = () => {
   return (

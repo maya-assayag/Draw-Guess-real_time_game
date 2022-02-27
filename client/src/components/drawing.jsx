@@ -40,7 +40,6 @@ const drawElement = (roughCanvas, context, element) => {
     const myPath = new Path2D(pathData);
     context.fill(myPath);
   } else {
-    console.log("ELEMENT", element);
     roughCanvas.draw(element.roughElement);
   }
 };
@@ -54,10 +53,11 @@ const Drawing = ({ location, socket, history }) => {
 
   useEffect(() => {
     const { role } = queryString.parse(location.search);
-    const { word } = queryString.parse(location.search);
-
     setPlayer(role);
-    setWord(word);
+
+    socket.on("send_word_to_drawing_view", w => {
+      setWord(w);
+    });
 
     socket.on("round_over", () => {
       history.replace(`/waiting-page?role=${player}`);
@@ -118,18 +118,9 @@ const Drawing = ({ location, socket, history }) => {
     setElements(elementsCopy);
   };
 
-  // const handleSendButton = () => {
-  //   // const canvas = document.getElementById("canvas");
-  //   // const dataURI = canvas.toDataURL();
-  //   // console.log(dataURI);
-  // };
-
-  // const handleGuessButton = () => {
-  //   guess === word ? console.log("score!") : console.log("Try again");
-  // };
-
   return (
     <div className="container">
+      <p>Drawing the word:{word.value}</p>
       <div id="tool_bar" className="radio">
         <input
           type="radio"
@@ -181,29 +172,6 @@ const Drawing = ({ location, socket, history }) => {
           onMouseMove={handleDrawing}
         ></canvas>
       </div>
-
-      {/* <div className="row">
-        {player === "Player1" ? null : (
-          <div>
-            <input
-              type="text"
-              placeholder="Guess..."
-              className="guess"
-              onChange={event => {
-                setGuess(event.target.value);
-              }}
-            ></input>
-            <button
-              type="submit"
-              className="btn btn-primary"
-              disabled={!guess}
-              onClick={handleGuessButton}
-            >
-              Guess
-            </button>
-          </div>
-        )}
-      </div> */}
     </div>
   );
 };
