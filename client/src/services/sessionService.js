@@ -1,7 +1,7 @@
 import http from "./httpService";
-import config from "../config.json";
 
-const apiEndpoint = `${config.apiUrl}/api/session`;
+
+const apiEndpoint = `/api/session`;
 
 function sessionUrl(id) {
   return `${apiEndpoint}/${id}`;

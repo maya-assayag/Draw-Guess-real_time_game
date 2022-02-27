@@ -11,9 +11,8 @@ import "react-toastify/dist/ReactToastify.css";
 import WaitingPage from "./components/waitingPage/waitingPage";
 import SessionsScoreTable from "./components/sessionsScoreTable";
 import Playground from "./components/playground";
-import config from "./config.json";
 
-const socket = io.connect(config.apiUrl);
+const socket = io.connect(process.env.REACT_APP_API_URL);
 
 const App = () => {
   return (

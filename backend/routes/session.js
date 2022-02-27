@@ -50,8 +50,6 @@ router.put("/:id", async (req, res) => {
 
   const id = req.params.id;
 
-  console.log("SCORE", req.body.score);
-
   const session = await Session.findByIdAndUpdate(
     id,
     {
@@ -67,7 +65,6 @@ router.put("/:id", async (req, res) => {
 
   if (!session)
     return res.status(404).send("The session with the given ID was not found");
-  console.log("SESSION AFTER UPDATE", session);
   res.send(session);
 });
 
