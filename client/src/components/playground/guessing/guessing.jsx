@@ -1,7 +1,8 @@
 import React, { useLayoutEffect, useState, useEffect } from "react";
 import rough from "roughjs/bundled/rough.esm";
 import getStroke from "perfect-freehand";
-import "./canvas.css";
+import "../canvas.css";
+import "./guessing.css";
 
 const drawElement = (roughCanvas, context, element) => {
   if (element.hasOwnProperty("points")) {
@@ -75,24 +76,36 @@ const Gussing = ({ socket, history, onRightGuessing }) => {
       ></canvas>
 
       <div>
-        <input
-          type="text"
-          placeholder="Guess..."
-          className="guess"
-          onChange={event => {
-            setGuess(event.target.value);
-            setIsCorrectGuess("");
-          }}
-        ></input>
-        <button
-          type="submit"
-          className="btn btn-primary"
-          disabled={!guess}
-          onClick={handleGuessButton}
-        >
-          Guess
-        </button>
-        <p className="text-danger">{IsCorrectGuess}</p>
+        <div className="container">
+          <div className="row">
+            <div className="col">
+              <input
+                id="guess-input"
+                type="text"
+                placeholder="Guess..."
+                className="guess"
+                onChange={event => {
+                  setGuess(event.target.value);
+                  setIsCorrectGuess("");
+                }}
+              ></input>
+              <button
+                id="guess-btn"
+                type="submit"
+                className="btn btn-primary"
+                disabled={!guess}
+                onClick={handleGuessButton}
+              >
+                Guess
+              </button>
+            </div>
+          </div>
+          <div className="row">
+            <div className="col">
+              <p className="text-danger">{IsCorrectGuess}</p>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   );

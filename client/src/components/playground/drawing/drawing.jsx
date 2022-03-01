@@ -2,7 +2,7 @@ import React, { useLayoutEffect, useState, useEffect } from "react";
 import rough from "roughjs/bundled/rough.esm";
 import queryString from "query-string";
 import getStroke from "perfect-freehand";
-import "./canvas.css";
+import "../canvas.css";
 
 const generator = rough.generator();
 
@@ -207,6 +207,8 @@ const Drawing = ({ location, socket, history }) => {
       <div className="row">
         <canvas
           id="canvas"
+          // width="1000%"
+          // height="2000%"
           width={window.innerWidth}
           height={window.innerHeight}
           onMouseDown={handlestartDrawingMouse}

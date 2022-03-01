@@ -87,7 +87,7 @@ const Home = ({ socket, history }) => {
         {player === "Player1" ? (
           <button
             type="submit"
-            className="btn btn-primary row"
+            className="welcome-btn btn btn-primary row"
             onClick={handleStartPlayButton}
             disabled={!username}
           >
@@ -96,7 +96,7 @@ const Home = ({ socket, history }) => {
         ) : (
           <button
             type="submit"
-            className="btn btn-primary row"
+            className="welcome-btn btn btn-primary row"
             onClick={handleJoinGame}
             disabled={!username}
           >
@@ -107,7 +107,7 @@ const Home = ({ socket, history }) => {
 
       <button
         type="submit"
-        className="btn btn-primary row"
+        className="welcome-btn btn btn-primary row"
         onClick={handleSessionScoreTableButton}
       >
         Score Table

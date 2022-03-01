@@ -1,22 +1,18 @@
 import { Route, Switch, Redirect } from "react-router-dom";
-import React from "react";
 import { ToastContainer } from "react-toastify";
+import React from "react";
 import io from "socket.io-client";
 import Header from "./components/header";
-import NotFound from "./components/notFound";
 import Home from "./components/home/home";
 import WordChoosing from "./components/wordChoosing/wordChoosing";
-import "./App.css";
-import "react-toastify/dist/ReactToastify.css";
 import WaitingPage from "./components/waitingPage/waitingPage";
 import SessionsScoreTable from "./components/sessionsScoreTable";
-import Playground from "./components/playground";
+import Playground from "./components/playground/playground";
+import NotFound from "./components/notFound";
+import "react-toastify/dist/ReactToastify.css";
+import "./App.css";
 
 const socket = io.connect(process.env.REACT_APP_API_URL);
-// const socket = io(process.env.REACT_APP_API_URL, {
-//   transports: ["websocket", "polling", "flashsocket"]
-// });
-console.log("SERVER IS:", process.env.REACT_APP_API_URL);
 
 const App = () => {
   return (

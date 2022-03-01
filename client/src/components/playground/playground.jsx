@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { Route } from "react-router-dom";
-import { getSession, saveSession } from "../services/sessionService";
-import Gussing from "./guessing";
-import Drawing from "./drawing";
-import TopBar from "./topBar";
+import { getSession, saveSession } from "../../services/sessionService";
+import Gussing from "./guessing/guessing";
+import Drawing from "./drawing/drawing";
+import TopBar from "./topBar/topBar";
 
 const Playground = ({ socket, history }) => {
   const [drawer, setDrawer] = useState({
